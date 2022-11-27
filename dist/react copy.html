@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+</head>
+<body>
+    <script>
+        //設計組件類別
+        class my extends React.Component{
+            render(){
+                
+                return React.createElement("H"+this.props.level,null,"HELLOOOOOO");
+            }
+        }
+
+        class myheadlist extends React.Component{
+            //組件類別第一步:建構式 constructor()
+            constructor(props){
+                super(props);
+                this.state={maxLevel:props.start};
+            }
+            //組件類別第二步: 將要繪製前的時刻
+            componentWillMount(){
+                //每秒鐘執行這裡的邏輯
+                this.intervalId=window.setInterval(()=>{
+                    this.setState((currentsState, currentProps)=>{
+                        if(currentsState.maxLevel > currentProps.end){
+                            return currentsState; //維持當前狀態，不更新
+                        }else{
+                            return {maxLevel:currentsState.maxLevel+1}; //maxLevel+1
+                        }
+                    });
+                },1000);
+                  
+            }
+            //組件類別第二步: 將要刪除前的時刻，清除排程
+            componentWillUnmount(){
+                window.clearInterval(this.intervalId);
+            }
+
+            
+            render(){ //繪製myheadlist組件的邏輯
+                let heads=[];
+                let head;
+                for(let i=1; i<this.state.maxLevel ; i++){
+                    head=React.createElement(my,{level:i});
+                    heads.push(head);
+                }
+                return React.createElement("DIV", null ,heads);
+            }
+        }
+        window.addEventListener("load",()=>{
+             //建立自訂的React組件實體，給定屬性
+             let Mycom = React.createElement(myheadlist,{start:2,end:6});
+             //將建立好的React組件實體畫到容器中
+             ReactDOM.render(Mycom,document.body);
+        });
+    </script>
+</body>
+</html>

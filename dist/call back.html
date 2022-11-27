@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回乎函式</title>
+    <script>
+        function GetData(){
+            return new Promise(function(resolve, reject){
+                 //ajax連線
+                let req = new XMLHttpRequest()
+                req.open("get", "https://.pada-x.com/resources/javascript-es6-react/data.out")
+                // https://training.pada-x.com/resources/javascript-es6-react/data.out
+                req.onload=function(){
+                    console.log("onload");
+                    resolve(this.responseText);
+                };
+                req.onerror=function(){
+                    reject("Error");
+                };
+                req.send();
+                //ajax連線
+            });
+           
+        }
+        let promise = GetData();
+        promise.then(function(result){
+                console.log("then"); 
+                alert(result);
+                },
+                function(error){
+                alert(error);
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
