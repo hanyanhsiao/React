@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- 載入Babel 編譯器套件 -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 包含JSX語法的javascript 必須使用type="text/babel" -->
+    <style type="text/css"> 
+    .head-3{font-size: 20px; font-weight: bold;} </style>
+</head>
+<body>
+    <script type="text/babel">
+        class MyForm extends React.Component{
+            constructor(props){
+                super(props);
+                this.state={name:"",gender:"male",story:""};  //初始化state單行輸入框的資料
+            }   
+            render(){
+                //在表單中註冊onSumit 事件
+                return <form onSubmit={this.handleSubmit.bind(this)}> 
+                    Name <input type="text" value={this.state.name}
+                        //在單行輸入框中註冊onChang事件
+                        onChange={this.handleNameChange.bind(this)}/>
+                        <br/>
+                    Gender<select value={this.state.gender} onChange={this.handleGenderChang.bind(this)}>
+                            <option value="male">男</option><option value="female">女</option>
+                        </select>
+                        <br/>
+                    Story <textarea value={this.state.story} onChange={this.handleStoryChang.bind(this)}/>
+                        <br/>
+                        <input type="submit" value="submit"/>
+
+                        </form>;
+                    
+            }
+            handleStoryChang(e){
+                this.setState({story:e.currentTarget.value});
+            }
+            handleGenderChang(e){
+                this.setState({gender:e.currentTarget.value}); 
+            }
+            handleNameChange(e){
+                this.setState({name:e.currentTarget.value}); 
+                //e.currentTarget 可取得觸發事件的HTML Element
+            }
+            handleSubmit(e){ //e就是事件物件， handleSubmit事件處理器
+                e.preventDefault();//可停止預設瀏覽器的表單處理動作，禁止重新整理的意思
+                console.log("表單送出");
+                console.log("Name: "+this.state.name);
+                console.log("Gender: "+this.state.gender);
+                console.log("Story: "+this.state.story);
+
+
+            }
+        }
+        
+        window.addEventListener("load",()=>{
+             ReactDOM.render(<MyForm/>,document.body);
+        });
+
+    </script>
+</body>
+</html>

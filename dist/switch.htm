@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Switch</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <!-- 載入Babel 編譯器套件 -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style type="text/css">
+        .switch{
+            width:60px;height: 30px;background-color: #dddddd;border-radius: 15px;
+        }
+        .switch>.btn{
+            width: 30px;height: 30px;background-color:gray;border-radius: 15px;
+        }
+        .switch-on{
+            background-color:rgb(71, 11, 223) ;
+        }
+        .switch-on>.btn{
+            background-color:rgb(127, 131, 245);margin-left: 30px;
+        }
+    
+    </style>
+    <script type="text/babel">
+    
+        class Switch extends React.Component{
+            constructor(props){
+                super(props);
+                this.state={on:false};
+
+            }
+            render(){
+                let className="switch";
+                if(this.state.on){
+                    className += " switch-on";
+                }
+                return<div className={className} onClick={this.update.bind(this)}>
+                    <div className="btn"></div>
+                </div>;
+
+            }
+            update(){
+                this.setState((currentState)=>({on:!currentState.on}));
+            }
+        }
+
+        window.addEventListener("load",()=>{
+            ReactDOM.render(<Switch/>, document.body);
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>
